@@ -1,0 +1,9 @@
+# Secrets
+**/.env
+**/.env.*
+!**/.env.example
+
+# Volumes/data
+**/config/
+**/data/
+**/logs/
