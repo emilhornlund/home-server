@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy:1.7
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DOCKER_HOST=unix:///tmp/docker.sock
+    volumes:
+      - ./certs:/etc/nginx/certs:ro
+      - ./conf/vhost.d:/etc/nginx/vhost.d
+      - ./conf/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - core-network
+    labels:
+      - com.github.nginx-proxy.nginx
+
+  acme-companion:
+    image: nginxproxy/acme-companion:2.6
+    container_name: acme-companion
+    restart: unless-stopped
+    depends_on:
+      - nginx-proxy
+    env_file: ./.env
+    environment:
+      DEFAULT_EMAIL: ${CLOUDFLARE_EMAIL}
+      ACME_CHALLENGE: DNS-01
+      ACMESH_DNS_API_CONFIG: |-
+        DNS_API: dns_cf
+        CF_Key: ${CLOUDFLARE_KEY}
+        CF_Email: ${CLOUDFLARE_EMAIL}
+    volumes:
+      - ./certs:/etc/nginx/certs
+      - ./acme:/etc/acme.sh
+      - ./conf/vhost.d:/etc/nginx/vhost.d
+      - ./conf/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - core-network
+
+networks:
+  core-network:
+    external: true

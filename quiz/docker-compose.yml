@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  quiz:
+    image: 192.168.0.65:9500/emilhornlund/quiz:baf99fa
+    container_name: quiz
+    restart: unless-stopped
+    env_file: ./.env
+    networks:
+      - core-network
+
+networks:
+  core-network:
+    external: true

@@ -5,9 +5,8 @@ Portainer is a lightweight management UI that allows you to easily manage your D
 ## Service Info
 
 - **Image**: `portainer/portainer-ce:lts`
-- **Ports**:
-  - `9443`: HTTPS Web UI
-- **Data**: Stored in `./data` and mapped to `/data` inside the container
+- **Port**: Internally runs on `9000`, exposed only to reverse proxy
+- **Data Directory**: `./data` → `/data` inside the container (persists user settings and stacks)
 
 ## Usage
 
@@ -23,11 +22,6 @@ Stop Portainer:
 docker compose down
 ```
 
-## Access
-
-* [https://your-server-ip:9443](https://your-server-ip:9443)
-* Create an admin user on first launch.
-
 ## Folder Structure
 
 ```
@@ -37,10 +31,12 @@ portainer/
 └── README.md
 ```
 
-## Notes
+## Networking
 
-* Make sure `docker.sock` is securely managed — it grants full control over Docker.
-* Consider putting Portainer behind a reverse proxy with HTTPS and authentication for extra protection.
+* Runs behind a reverse proxy at `portainer.yourdomain.com`
+* Internal traffic over port `9000`
+* No ports are exposed directly to the host
+* Connects to the shared `core-network`
 
 ## Cleanup
 

@@ -4,6 +4,12 @@
 !**/.env.example
 
 # Volumes/data
+**/acme/
+**/certs/
+**/conf/
 **/config/
 **/data/
+**/etc-dnsmasq.d/
+**/etc-pihole/
 **/logs/
+**/uploads/
