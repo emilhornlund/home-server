@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  quiz-gh-runner-1:
+    image: myoung34/github-runner:2.324.0
+    container_name: quiz-gh-runner-1
+    network_mode: host
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      REPO_URL: https://github.com/emilhornlund/quiz
+      RUNNER_NAME: quiz-docker-runner-1
+      ACCESS_TOKEN: ${GH_RUNNER_PAT}
+      RUNNER_WORKDIR: /tmp/runner/work
+      CONFIGURED_ACTIONS_RUNNER_FILES_DIR: /runner/data
+      DISABLE_AUTOMATIC_DEREGISTRATION: true
+      RUNNER_SCOPE: 'repo'
+      LABELS: self-hosted,docker,prod
+    security_opt:
+      - label:disable
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/runner/data:/runner/data'
+      - '/tmp/runner:/tmp/runner'

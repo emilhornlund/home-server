@@ -5,6 +5,7 @@
 
 # Volumes/data
 **/acme/
+**/auth/
 **/certs/
 **/conf/
 **/config/
@@ -13,3 +14,4 @@
 **/etc-pihole/
 **/logs/
 **/uploads/
+**/_work/

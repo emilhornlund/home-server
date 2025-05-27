@@ -17,6 +17,13 @@ docker network create core-network
 
 ## Available Services
 
+### [GitHub Runner](./github-runner)
+A self-hosted GitHub Actions runner container for automating CI/CD workflows.
+
+- Uses `myoung34/github-runner`
+- Connects to host network
+- Runs jobs for `quiz` at the moment
+
 ### [MongoDB](./mongodb)
 A containerized MongoDB 8.0 instance for development and local service usage.
 
@@ -52,6 +59,14 @@ A password-protected Redis 7 instance for caching or local storage.
 - Exposes port `6379`
 - Password set via `.env`
 - Data persisted in `redis/data`
+
+### [Registry](./registry)
+A private Docker registry with basic authentication and HTTPS.
+
+- Exposes port `5000`
+- Auth credentials stored in `registry/auth`
+- TLS certificates stored in `registry/certs`
+- Images persisted in `registry/data`
 
 ### [Vaultwarden](./vaultwarden)
 A self-hosted Bitwarden-compatible password manager.
