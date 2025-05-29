@@ -15,7 +15,7 @@ services:
       CONFIGURED_ACTIONS_RUNNER_FILES_DIR: /runner/data
       DISABLE_AUTOMATIC_DEREGISTRATION: true
       RUNNER_SCOPE: 'repo'
-      LABELS: self-hosted,docker,prod
+      LABELS: self-hosted
     security_opt:
       - label:disable
     volumes:
